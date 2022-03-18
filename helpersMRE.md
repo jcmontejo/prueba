@@ -109,3 +109,32 @@ _tableNameTable = $("#tblWhatever").DataTable({
             });
 }
 ```
+# Other helpers that could be useful
+
+```php
+#returns data formatted in currency type
+if (! function_exists('CurrencyFormat')) {
+  function CurrencyFormat ($amount){
+    $amount = $amount == '' ? 0 : $amount;
+    if($amount < 0) {
+      $amount *= -1;
+      return '-$' . number_format($amount, 2);
+    } else {
+      return '$' . number_format($amount, 2);
+    }
+  }
+}
+#use like this
+$dataFormat = CurrencyFormat($dataToFormat);
+#----------------------------------------------------------------------------
+#Remove currency formatting to be stored in the database
+ if (! function_exists('removeCurrencyFormat')) {
+    function removeCurrencyFormat($currency){
+      $value = str_replace('$', '' ,$currency);
+      $value = str_replace(',', '' ,$value);
+      return trim($value);
+    }
+  }
+#use like this
+$dataFormat = removeCurrencyFormat($dataToFormat);
+```
